@@ -19,7 +19,7 @@ function getAnimalsOnTable() {
             const where_is = row.children[7].textContent
             const when_born = row.children[8].textContent
             const castrated = row.children[9].textContent
-            const felv_fiv = row.children[10].textContent
+            const test_result = row.children[10].textContent
             const behaviour_info = row.children[11].textContent
             const rescue_info = row.children[12].textContent
             const historic = row.children[13].textContent
@@ -37,7 +37,7 @@ function getAnimalsOnTable() {
                     where_is,
                     when_born,
                     castrated,
-                    felv_fiv,
+                    test_result,
                     behaviour_info,
                     rescue_info,
                     historic,
@@ -52,6 +52,8 @@ function getAnimalsOnTable() {
             console.log(`Linha ${i}: Não tem animal`)
         }
     }
+
+
     saveNameAndImage(contentFile)
 }
 
