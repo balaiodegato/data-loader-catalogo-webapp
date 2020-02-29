@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csvtojson": "^2.0.10",
     "firebase": "^7.7.0",
     "firebase-admin": "^8.9.2"
   }
