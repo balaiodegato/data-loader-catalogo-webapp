@@ -1,28 +1,30 @@
-const converter = require('csvtojson')
 const db = require('./config/firebaseConfig').firestore()
-const animals = require('../tests/animals.json')
+const { execSync } = require('child_process')
 
-const SHEET_PATH = 'C:\\Users\\Danie\\Desktop\\Gatos.csv'
+const cats = require('../__examples-json/cats.json')
+const dogs = require('../__examples-json/dogs.json')
 
+main()
 async function main() {
     try {
-        // const animals = await convertCsvToJSON(SHEET_PATH)
+        cats.forEach(async cat => {
+            await insertAnimal(cat)
+        })
 
-        getAnimals()
-
-        // await insertAnimal(animals[0])
-        // animals.map(async animal => {
-        //     await insertAnimal(animal)
-        // })
+        dogs.forEach(async dog => {
+            await insertAnimal(dog)
+        })
     } catch (err) {
         console.warn(err.message);
     }
 }
 
-main()
-
-async function convertCsvToJSON(csvContent) {
-    return converter().fromFile(csvContent)
+function getBase64Image(pet) {
+    if(pet.imgUrl) {
+        const base64Image = execSync(`python3 scripts/tobase64mime.py ${pet.imgUrl}`)
+        return base64Image.toString()
+    }
+    return null
 }
 
 function insertAnimal(animal) {
@@ -31,21 +33,4 @@ function insertAnimal(animal) {
     } catch (err) {
         throw err.message
     }
-}
-
-async function getAnimals() {
-    const animalsRef = db.collection('animals');
-    animalsRef.get()
-        .then(snapshot => {
-            snapshot.forEach(doc => {
-                console.log(doc.id, '=>', doc.data());
-            });
-        })
-        .catch(err => {
-            console.log('Error getting documents', err);
-        });
-}
-
-function clearAllAnimals() {
-
 }
